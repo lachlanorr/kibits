@@ -1,0 +1,9 @@
+* Kibits - Distributed Game Blockchain Library
+
+A blockchain to track items, ability, and currency within a
+distributed multiplayer game.
+
+With Kibits, servers that trust one another can allow players to carry
+items, abilities, and currency between servers.
+
+Kibits is licensed under the terms of the [[http://en.wikipedia.org/wiki/Zlib_License][zlib License]].
