@@ -1,9 +1,18 @@
 * Kibits - Distributed Game Blockchain Library
 
-A blockchain to track items, ability, and currency within a
-distributed multiplayer game.
+A blockchain to track player progression (things like items,
+abilities, and currency) within a distributed multiplayer game.
 
-With Kibits, servers that trust one another can allow players to carry
-items, abilities, and currency between servers.
+With Kibits, servers that trust one another can allow players to
+maintain their progression between servers.
+
+Limits are defined and enforced in each ledger, providing a way to
+prove players have earned their progression in a reasonable way, and
+allow servers to easily determine if they want to respect the player's
+activities on other servers.
+
+Progression earned in untrusted ways can be ignored by a server, and
+the player simply won't have access to those portions of their
+progression when playing on servers that lack trust.
 
 Kibits is licensed under the terms of the [[http://en.wikipedia.org/wiki/Zlib_License][zlib License]].
