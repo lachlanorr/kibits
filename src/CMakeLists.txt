@@ -25,4 +25,4 @@
 #-------------------------------------------------------------------------------
 
 ADD_SUBDIRECTORY(kibits)
-ADD_SUBDIRECTORY(tests)
+ADD_SUBDIRECTORY(kibits_tests)

@@ -24,13 +24,22 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-SET (kibits_SOURCES
-  kibits.h
-  kibits.cpp
+SET (kibits_tests_SOURCES
+  key_generation.cpp
   )
 
-ADD_LIBRARY (kibits
-  ${kibits_SOURCES}
+ADD_EXECUTABLE (kibits_tests
+  ${kibits_tests_SOURCES}
   )
 
-source_group("" FILES ${kibits_SOURCES})
+source_group("" FILES ${kibits_tests_SOURCES})
+
+TARGET_LINK_LIBRARIES (kibits_tests
+  kibits_proto
+  gtest_main
+  )
+
+SET_TARGET_PROPERTIES (kibits_tests PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/packaged
+  RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/packaged
+  )

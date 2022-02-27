@@ -24,19 +24,35 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-SET (tests_SOURCES
-  key_generation.cpp
+SET(PROTO_OUT "${CMAKE_CURRENT_BINARY_DIR}")
+SET(PROTO_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+
+
+macro(PROTOC path_no_ext)
+  add_custom_command(
+    OUTPUT ${PROTO_OUT}/${path_no_ext}.pb.cc ${PROTO_OUT}/${path_no_ext}.pb.h
+    COMMAND $<TARGET_FILE:protoc> -I=${PROTO_DIR} -I=${PROTOBUF_INCLUDE} --cpp_out=${PROTO_OUT} ${path_no_ext}.proto
+    DEPENDS ${PROTO_DIR}/${path_no_ext}.proto
+    )
+
+  list(APPEND CPP_SOURCES "${PROTO_OUT}/${path_no_ext}.pb.cc" "${PROTO_OUT}/${path_no_ext}.pb.h" "${PROTO_DIR}/${path_no_ext}.proto")
+endmacro()
+
+FILE(GLOB_RECURSE proto_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} kibits *.proto)
+LIST(TRANSFORM proto_files REPLACE "\\.proto$" "")
+foreach(proto_file ${proto_files})
+  PROTOC("${proto_file}")
+endforeach()
+
+ADD_LIBRARY(kibits_proto ${CPP_SOURCES})
+TARGET_INCLUDE_DIRECTORIES(kibits_proto PRIVATE
+  ${PROTO_OUT}
   )
 
-ADD_EXECUTABLE (tests
-  ${tests_SOURCES}
-  )
+source_group("" FILES ${CPP_SOURCES})
 
-TARGET_LINK_LIBRARIES (tests
-  gtest_main
-  )
+ADD_DEPENDENCIES(kibits_proto protoc)
 
-SET_TARGET_PROPERTIES (tests PROPERTIES
-  RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/Debug
-  RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release
-  )
+TARGET_INCLUDE_DIRECTORIES (kibits_proto PRIVATE
+  ${PROTOBUF_INCLUDE}
+)

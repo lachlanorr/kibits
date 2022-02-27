@@ -24,6 +24,32 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
-set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+# googletest
+SET(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
+SET(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 ADD_SUBDIRECTORY(googletest)
+SET_TARGET_PROPERTIES (gtest PROPERTIES
+  FOLDER ExternalProjectTargets/googletest
+  )
+SET_TARGET_PROPERTIES (gtest_main PROPERTIES
+  FOLDER ExternalProjectTargets/googletest
+  )
+
+#protobuf
+SET(protobuf_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+SET(protobuf_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+SET(protobuf_WITH_ZLIB OFF CACHE BOOL "" FORCE)
+ADD_SUBDIRECTORY(protobuf/cmake)
+SET_TARGET_PROPERTIES (libprotobuf PROPERTIES
+  FOLDER ExternalProjectTargets/protobuf
+  )
+SET_TARGET_PROPERTIES (libprotobuf-lite PROPERTIES
+  FOLDER ExternalProjectTargets/protobuf
+  )
+SET_TARGET_PROPERTIES (libprotoc PROPERTIES
+  FOLDER ExternalProjectTargets/protobuf
+  )
+SET_TARGET_PROPERTIES (protoc PROPERTIES
+  FOLDER ExternalProjectTargets/protobuf
+  )
+SET (PROTOBUF_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/protobuf/src" CACHE INTERNAL "")
