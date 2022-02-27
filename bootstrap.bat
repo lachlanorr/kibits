@@ -7,8 +7,8 @@ SETLOCAL
 CD /d %~dp0
 
 :: Pull down our submodules
-::git submodule init
-::git submodule update --init --recursive
+git submodule init
+git submodule update --init --recursive
 
 :: Write root directory to main KIBITS_ROOT env var
 FOR /f "tokens=1" %%B in ('CHDIR') do set KIBITS_ROOT=%%B

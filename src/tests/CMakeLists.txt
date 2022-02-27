@@ -24,14 +24,19 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-CMAKE_MINIMUM_REQUIRED (VERSION 3.0.0)
+SET (tests_SOURCES
+  key_generation.cpp
+  )
 
-CMAKE_POLICY(SET CMP0091 NEW)
-SET (CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+ADD_EXECUTABLE (tests
+  ${tests_SOURCES}
+  )
 
-PROJECT (kibits)
+TARGET_LINK_LIBRARIES (tests
+  gtest_main
+  )
 
-INCLUDE_DIRECTORIES (${CMAKE_CURRENT_SOURCE_DIR}/src)
-
-ADD_SUBDIRECTORY(external)
-ADD_SUBDIRECTORY(src)
+SET_TARGET_PROPERTIES (tests PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/Debug
+  RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release
+  )

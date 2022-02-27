@@ -24,14 +24,6 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-CMAKE_MINIMUM_REQUIRED (VERSION 3.0.0)
-
-CMAKE_POLICY(SET CMP0091 NEW)
-SET (CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-
-PROJECT (kibits)
-
-INCLUDE_DIRECTORIES (${CMAKE_CURRENT_SOURCE_DIR}/src)
-
-ADD_SUBDIRECTORY(external)
-ADD_SUBDIRECTORY(src)
+set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
+set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+ADD_SUBDIRECTORY(googletest)
