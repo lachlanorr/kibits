@@ -28,4 +28,3 @@
 #define KIBITS_KIBITS_H
 
 #endif // #ifndef KIBITS_KIBITS_H
-
