@@ -1,9 +1,6 @@
 [submodule "external/googletest"]
 	path = external/googletest
 	url = https://github.com/lachlanorr/googletest.git
-[submodule "external/protobuf"]
-	path = external/protobuf
-	url = https://github.com/lachlanorr/protobuf.git
 [submodule "external/libsodium"]
 	path = external/libsodium
 	url = https://github.com/lachlanorr/libsodium.git
