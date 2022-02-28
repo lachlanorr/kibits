@@ -30,7 +30,7 @@ set(proto_dir "${CMAKE_CURRENT_SOURCE_DIR}")
 macro(compile_proto path_no_ext)
   add_custom_command(
     OUTPUT ${proto_out}/${path_no_ext}.pb.cc ${proto_out}/${path_no_ext}.pb.h
-    COMMAND $<TARGET_FILE:protoc> -I=${proto_dir} -I=${PROTOBUF_INCLUDE} --cpp_out=${proto_out} ${path_no_ext}.proto
+    COMMAND $<TARGET_FILE:protoc> -I=${proto_dir} -I=${PROTOBUF_INCLUDE_PATH} --cpp_out=${proto_out} ${path_no_ext}.proto
     DEPENDS ${proto_dir}/${path_no_ext}.proto
     )
 
