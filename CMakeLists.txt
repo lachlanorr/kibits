@@ -24,18 +24,18 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-CMAKE_MINIMUM_REQUIRED (VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.22.0)
 
-SET_PROPERTY (GLOBAL PROPERTY USE_FOLDERS ON)
-CMAKE_POLICY (SET CMP0091 NEW)
-SET (CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+cmake_policy(SET CMP0091 NEW)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
-PROJECT (kibits)
+project(kibits)
 
-SET (CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
 
-INCLUDE_DIRECTORIES (${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-ADD_SUBDIRECTORY(external)
-ADD_SUBDIRECTORY(proto)
-ADD_SUBDIRECTORY(src)
+add_subdirectory(external)
+add_subdirectory(proto)
+add_subdirectory(src)

@@ -25,36 +25,36 @@
 #-------------------------------------------------------------------------------
 
 # googletest
-SET(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
-SET(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
-ADD_SUBDIRECTORY(googletest)
-SET_TARGET_PROPERTIES (gtest PROPERTIES
+set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
+set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+add_subdirectory(googletest)
+set_target_properties(gtest PROPERTIES
   FOLDER external/googletest
   )
-SET_TARGET_PROPERTIES (gtest_main PROPERTIES
+set_target_properties(gtest_main PROPERTIES
   FOLDER external/googletest
   )
 
 # protobuf
-SET(protobuf_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-SET(protobuf_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-SET(protobuf_WITH_ZLIB OFF CACHE BOOL "" FORCE)
-ADD_SUBDIRECTORY(protobuf/cmake)
-SET_TARGET_PROPERTIES (libprotobuf PROPERTIES
+set(protobuf_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(protobuf_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(protobuf_WITH_ZLIB OFF CACHE BOOL "" FORCE)
+add_subdirectory(protobuf/cmake)
+set_target_properties(libprotobuf PROPERTIES
   FOLDER external/protobuf
   )
-SET_TARGET_PROPERTIES (libprotobuf-lite PROPERTIES
+set_target_properties(libprotobuf-lite PROPERTIES
   FOLDER external/protobuf
   )
-SET_TARGET_PROPERTIES (libprotoc PROPERTIES
+set_target_properties(libprotoc PROPERTIES
   FOLDER external/protobuf
   )
-SET_TARGET_PROPERTIES (protoc PROPERTIES
+set_target_properties(protoc PROPERTIES
   FOLDER external/protobuf
   )
 
 # libsodium
-SET (libsodium_SOURCES
+set(libsodium_SOURCES
   libsodium/src/libsodium/crypto_generichash/crypto_generichash.c
   libsodium/src/libsodium/crypto_generichash/blake2b/generichash_blake2.c
   libsodium/src/libsodium/crypto_generichash/blake2b/ref/blake2b-compress-ref.c
@@ -293,53 +293,53 @@ SET (libsodium_SOURCES
   libsodium/src/libsodium/crypto_core/ed25519/ref10/fe_51/base.h
   )
 
-find_package (Git)
-if (GIT_FOUND)
+find_package(Git)
+if(GIT_FOUND)
   message("git found: ${GIT_EXECUTABLE} in version ${GIT_VERSION_STRING}")
-endif (GIT_FOUND)
+endif()
 
 execute_process(
   COMMAND ${GIT_EXECUTABLE} tag --points-at HEAD
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/libsodium
-  OUTPUT_VARIABLE libsodium_tag)
+  OUTPUT_VARIABLE libsodium_tag
+  )
 
 string(STRIP ${libsodium_tag} VERSION)
 
-IF (NOT "${VERSION}" MATCHES "^[0-9]+\\.[0-9]+\\.[0-9]+$")
-  message("Invalid libsodium version='${VERSION}'")
-ENDIF()
+if(NOT "${VERSION}" MATCHES "^[0-9]+\\.[0-9]+\\.[0-9]+$")
+  message(FATAL_ERROR "Invalid libsodium version='${VERSION}'")
+endif()
 
 string(REGEX MATCH "^([0-9]+)\\.([0-9]+)\\.[0-9]+$" reout "${VERSION}")
-SET(SODIUM_LIBRARY_VERSION_MAJOR ${CMAKE_MATCH_1})
-SET(SODIUM_LIBRARY_VERSION_MINOR ${CMAKE_MATCH_2})
+set(SODIUM_LIBRARY_VERSION_MAJOR ${CMAKE_MATCH_1})
+set(SODIUM_LIBRARY_VERSION_MINOR ${CMAKE_MATCH_2})
 
 configure_file(
   libsodium/src/libsodium/include/sodium/version.h.in
   ${CMAKE_CURRENT_BINARY_DIR}/libsodium/include/sodium/version.h
   )
 
-ADD_LIBRARY (libsodium
+add_library(libsodium
   ${libsodium_SOURCES}
   )
 
-TARGET_INCLUDE_DIRECTORIES (libsodium PRIVATE
+target_include_directories(libsodium PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/libsodium/src/libsodium/include/sodium
   ${CMAKE_CURRENT_BINARY_DIR}/libsodium/include/sodium
   )
 
-TARGET_INCLUDE_DIRECTORIES (libsodium SYSTEM INTERFACE
+target_include_directories(libsodium SYSTEM INTERFACE
   ${CMAKE_CURRENT_SOURCE_DIR}/libsodium/src/libsodium/include
   ${CMAKE_CURRENT_SOURCE_DIR}/libsodium/src/libsodium/include/sodium
   ${CMAKE_CURRENT_BINARY_DIR}/libsodium/include
   )
 
-TARGET_COMPILE_DEFINITIONS (libsodium
-    PUBLIC
-        SODIUM_STATIC
-    PRIVATE
-        CONFIGURED
-)
-SET_TARGET_PROPERTIES (libsodium PROPERTIES
+target_compile_definitions(libsodium
+  PUBLIC SODIUM_STATIC
+  PRIVATE CONFIGURED
+  )
+
+set_target_properties(libsodium PROPERTIES
   FOLDER external/libsodium
   )
 

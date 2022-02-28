@@ -24,5 +24,5 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-ADD_SUBDIRECTORY(kibits)
-ADD_SUBDIRECTORY(kibits_tests)
+add_subdirectory(kibits)
+add_subdirectory(kibits_tests)

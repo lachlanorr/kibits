@@ -24,12 +24,12 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-SET (kibits_SOURCES
+set(kibits_SOURCES
   kibits.h
   kibits.cpp
   )
 
-ADD_LIBRARY (kibits
+add_library(kibits
   ${kibits_SOURCES}
   )
 

@@ -24,23 +24,23 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-SET (kibits_tests_SOURCES
+set(kibits_tests_SOURCES
   key_generation.cpp
   )
 
-ADD_EXECUTABLE (kibits_tests
+add_executable(kibits_tests
   ${kibits_tests_SOURCES}
   )
 
 source_group("" FILES ${kibits_tests_SOURCES})
 
-TARGET_LINK_LIBRARIES (kibits_tests
+target_link_libraries(kibits_tests
   kibits_proto
   libsodium
   gtest_main
   )
 
-SET_TARGET_PROPERTIES (kibits_tests PROPERTIES
+set_target_properties(kibits_tests PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/packaged
   RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/packaged
   )

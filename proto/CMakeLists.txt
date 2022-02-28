@@ -24,39 +24,38 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-SET(PROTO_OUT "${CMAKE_CURRENT_BINARY_DIR}")
-SET(PROTO_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+set(proto_out "${CMAKE_CURRENT_BINARY_DIR}")
+set(proto_dir "${CMAKE_CURRENT_SOURCE_DIR}")
 
-
-macro(PROTOC path_no_ext)
+macro(compile_proto path_no_ext)
   add_custom_command(
-    OUTPUT ${PROTO_OUT}/${path_no_ext}.pb.cc ${PROTO_OUT}/${path_no_ext}.pb.h
-    COMMAND $<TARGET_FILE:protoc> -I=${PROTO_DIR} -I=${PROTOBUF_INCLUDE} --cpp_out=${PROTO_OUT} ${path_no_ext}.proto
-    DEPENDS ${PROTO_DIR}/${path_no_ext}.proto
+    OUTPUT ${proto_out}/${path_no_ext}.pb.cc ${proto_out}/${path_no_ext}.pb.h
+    COMMAND $<TARGET_FILE:protoc> -I=${proto_dir} -I=${PROTOBUF_INCLUDE} --cpp_out=${proto_out} ${path_no_ext}.proto
+    DEPENDS ${proto_dir}/${path_no_ext}.proto
     )
 
-  list(APPEND CPP_SOURCES "${PROTO_OUT}/${path_no_ext}.pb.cc" "${PROTO_OUT}/${path_no_ext}.pb.h" "${PROTO_DIR}/${path_no_ext}.proto")
+  list(APPEND proto_gen_SOURCES "${proto_out}/${path_no_ext}.pb.cc" "${proto_out}/${path_no_ext}.pb.h" "${proto_dir}/${path_no_ext}.proto")
 endmacro()
 
-FILE(GLOB_RECURSE proto_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} kibits *.proto)
-LIST(TRANSFORM proto_files REPLACE "\\.proto$" "")
+file(GLOB_RECURSE proto_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} kibits *.proto)
+list(TRANSFORM proto_files REPLACE "\\.proto$" "")
 foreach(proto_file ${proto_files})
-  PROTOC("${proto_file}")
+  compile_proto("${proto_file}")
 endforeach()
 
-ADD_LIBRARY(kibits_proto ${CPP_SOURCES})
-TARGET_INCLUDE_DIRECTORIES(kibits_proto PRIVATE
-  ${PROTO_OUT}
+add_library(kibits_proto ${proto_gen_SOURCES})
+target_include_directories(kibits_proto PRIVATE
+  ${proto_out}
   )
 
-source_group("" FILES ${CPP_SOURCES})
+source_group("" FILES ${proto_gen_SOURCES})
 
-ADD_DEPENDENCIES(kibits_proto protoc)
+add_dependencies(kibits_proto protoc)
 
-TARGET_LINK_LIBRARIES (kibits_proto
+target_link_libraries(kibits_proto
   PUBLIC libprotobuf
   )
 
-TARGET_INCLUDE_DIRECTORIES (kibits_proto INTERFACE
+target_include_directories(kibits_proto INTERFACE
   ${CMAKE_CURRENT_BINARY_DIR}/..
   )
