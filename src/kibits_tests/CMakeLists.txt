@@ -36,6 +36,7 @@ source_group("" FILES ${kibits_tests_SOURCES})
 
 TARGET_LINK_LIBRARIES (kibits_tests
   kibits_proto
+  libsodium
   gtest_main
   )
 

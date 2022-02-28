@@ -52,7 +52,6 @@ SET_TARGET_PROPERTIES (libprotoc PROPERTIES
 SET_TARGET_PROPERTIES (protoc PROPERTIES
   FOLDER external/protobuf
   )
-SET (PROTOBUF_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/protobuf/src" CACHE INTERNAL "")
 
 # libsodium
 SET (libsodium_SOURCES
@@ -316,7 +315,7 @@ SET(SODIUM_LIBRARY_VERSION_MINOR ${CMAKE_MATCH_2})
 
 configure_file(
   libsodium/src/libsodium/include/sodium/version.h.in
-  ${CMAKE_CURRENT_BINARY_DIR}/libsodium/include/version.h
+  ${CMAKE_CURRENT_BINARY_DIR}/libsodium/include/sodium/version.h
   )
 
 ADD_LIBRARY (libsodium
@@ -324,6 +323,11 @@ ADD_LIBRARY (libsodium
   )
 
 TARGET_INCLUDE_DIRECTORIES (libsodium PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/libsodium/src/libsodium/include/sodium
+  ${CMAKE_CURRENT_BINARY_DIR}/libsodium/include/sodium
+  )
+
+TARGET_INCLUDE_DIRECTORIES (libsodium SYSTEM INTERFACE
   ${CMAKE_CURRENT_SOURCE_DIR}/libsodium/src/libsodium/include
   ${CMAKE_CURRENT_SOURCE_DIR}/libsodium/src/libsodium/include/sodium
   ${CMAKE_CURRENT_BINARY_DIR}/libsodium/include

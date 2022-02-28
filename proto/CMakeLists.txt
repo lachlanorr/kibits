@@ -53,6 +53,10 @@ source_group("" FILES ${CPP_SOURCES})
 
 ADD_DEPENDENCIES(kibits_proto protoc)
 
-TARGET_INCLUDE_DIRECTORIES (kibits_proto PRIVATE
-  ${PROTOBUF_INCLUDE}
-)
+TARGET_LINK_LIBRARIES (kibits_proto
+  PUBLIC libprotobuf
+  )
+
+TARGET_INCLUDE_DIRECTORIES (kibits_proto INTERFACE
+  ${CMAKE_CURRENT_BINARY_DIR}/..
+  )
