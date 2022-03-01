@@ -32,6 +32,8 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 project(kibits)
 
+option(kibits_BUILD_TESTS "Build tests" ON)
+
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -39,3 +41,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 add_subdirectory(external)
 add_subdirectory(proto)
 add_subdirectory(src)
+
+if(kibits_BUILD_TESTS)
+  set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT kibits_tests)
+endif()

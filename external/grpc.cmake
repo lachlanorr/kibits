@@ -24,8 +24,16 @@
 #   distribution.
 #-------------------------------------------------------------------------------
 
-add_subdirectory(kibits)
-
-if(kibits_BUILD_TESTS)
-  add_subdirectory(kibits_tests)
-endif()
+set(gRPC_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(gRPC_BUILD_CODEGEN OFF CACHE BOOL "" FORCE)
+set(gRPC_BUILD_CSHARP_EXT OFF CACHE BOOL "" FORCE)
+set(gRPC_BACKWARDS_COMPATIBILITY_MODE OFF CACHE BOOL "" FORCE)
+set(gRPC_BUILD_GRPC_CSHARP_PLUGIN OFF CACHE BOOL "" FORCE)
+set(gRPC_BUILD_GRPC_NODE_PLUGIN OFF CACHE BOOL "" FORCE)
+set(gRPC_BUILD_GRPC_OBJECTIVE_C_PLUGIN OFF CACHE BOOL "" FORCE)
+set(gRPC_BUILD_GRPC_PHP_PLUGIN OFF CACHE BOOL "" FORCE)
+set(gRPC_BUILD_GRPC_PYTHON_PLUGIN OFF CACHE BOOL "" FORCE)
+set(gRPC_BUILD_GRPC_RUBY_PLUGIN OFF CACHE BOOL "" FORCE)
+add_subdirectory(grpc)
+set(PROTOBUF_INCLUDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/grpc/third_party/protobuf/src" CACHE INTERNAL "")
+configure_target_folders("grpc")
